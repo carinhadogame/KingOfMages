@@ -1,0 +1,875 @@
+/* =========================================================
+   KING OF MAGES — FOLHA DE ESTILO
+   ========================================================= */
+
+/* =========================================================
+   1. TOKENS
+   ========================================================= */
+:root {
+    /* Base de pedra */
+    --abyss-bg:      #08080b;
+    --stone-dark:    #131319;
+    --stone-mid:     #1c1c24;
+    --ink:           #000;
+
+    /* Metal e pergaminho */
+    --gold-deep:     #6b5722;
+    --gold-antique:  #b89947;
+    --gold-light:    #eadd85;
+    --parchment:     #e2d4b7;
+    --parchment-dim: #9c917c;
+
+    /* Sangue */
+    --blood-red:     #8a0303;
+    --blood-bright:  #c81f1f;
+
+    /* Arcano — cor de tudo que é interativo.
+       Ouro + vermelho sozinhos é paleta de qualquer RPG de mesa.
+       O roxo marca "isso é magia / isso você clica". */
+    --arcane:        #7b5cff;
+    --arcane-glow:   #a98cff;
+
+    /* Caixa de diálogo */
+    --dialog-blue:   #081021;
+    --dialog-deep:   #03050a;
+
+    /* O CSS antigo usava --primary-blue sem nunca declarar. */
+    --primary-blue:  var(--arcane);
+
+    /* Tipografia fluida */
+    --fs-pixel-xs:   clamp(0.5rem,  1.9vw, 0.62rem);
+    --fs-pixel-sm:   clamp(0.65rem, 2.4vw, 0.85rem);
+    --fs-pixel-md:   clamp(0.8rem,  3.0vw, 1.05rem);
+    --fs-pixel-lg:   clamp(1.05rem, 5.0vw, 1.9rem);
+    --fs-body:       clamp(1.05rem, 3.4vw, 1.35rem);
+    --fs-lore:       clamp(1.15rem, 3.6vw, 1.45rem);
+
+    /* Métricas */
+    --frame:         4px;
+    --nav-h:         56px;
+    --shadow-hard:   6px 6px 0 rgba(0,0,0,.75);
+    --shadow-deep:   10px 10px 0 rgba(0,0,0,.7);
+}
+
+/* =========================================================
+   2. RESET
+   ========================================================= */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* Compensa a navbar fixa quando um link de âncora salta pra seção. */
+    scroll-padding-top: calc(var(--nav-h) + 1rem);
+}
+
+img, video { max-width: 100%; display: block; }
+ul { list-style: none; }
+button { font: inherit; color: inherit; background: none; border: none; }
+
+::selection { background: var(--arcane); color: #fff; }
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    z-index: 1100;
+    background: var(--arcane);
+    color: #fff;
+    padding: .75rem 1.25rem;
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-xs);
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* =========================================================
+   3. FUNDO
+   Uma grade de 32px que ecoa o tilemap do jogo, brilho arcano
+   no topo e vinheta radial — leitura de "arena fechando".
+   ========================================================= */
+body {
+    background-color: var(--abyss-bg);
+    background-image:
+        radial-gradient(120% 60% at 50% -10%, rgba(123,92,255,.13), transparent 60%),
+        repeating-linear-gradient(90deg, rgba(184,153,71,.045) 0 1px, transparent 1px 32px),
+        repeating-linear-gradient(0deg,  rgba(184,153,71,.045) 0 1px, transparent 1px 32px);
+    background-attachment: fixed;
+    color: var(--parchment);
+    font-family: 'VT323', 'Courier New', monospace;
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,.65) 100%);
+    pointer-events: none;
+    z-index: 998;
+}
+
+.crt-overlay {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(rgba(0,0,0,0) 0 2px, rgba(0,0,0,.14) 2px 3px);
+    z-index: 999;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+/* =========================================================
+   4. NAVEGAÇÃO
+   ========================================================= */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    height: var(--nav-h);
+    background: rgba(8,8,11,.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid var(--gold-deep);
+    box-shadow: 0 4px 0 rgba(0,0,0,.6);
+}
+
+.nav-content {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 clamp(.75rem, 3vw, 2rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.nav-brand {
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-sm);
+    color: var(--gold-light);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 var(--ink);
+    white-space: nowrap;
+}
+
+.nav-links {
+    display: flex;
+    gap: clamp(.75rem, 3.5vw, 2rem);
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--parchment-dim);
+    text-decoration: none;
+    font-size: clamp(1rem, 3.2vw, 1.25rem);
+    letter-spacing: .5px;
+    padding: .35rem .1rem;
+    border-bottom: 2px solid transparent;
+    transition: color .15s ease, border-color .15s ease;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   5. HERO
+   ========================================================= */
+.hero {
+    /* svh, não vh: com vh a barra de endereço do celular corta a seção. */
+    min-height: calc(100svh - var(--nav-h));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: clamp(2rem, 7vw, 4rem) 1.25rem;
+    position: relative;
+}
+
+.logo-wrapper {
+    max-width: min(520px, 88vw);
+    margin-bottom: clamp(1.5rem, 5vw, 2.5rem);
+    position: relative;
+}
+
+/* Halo pulsante atrás da logo — o único movimento ambiente da página. */
+.logo-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -12%;
+    background: radial-gradient(circle, rgba(123,92,255,.35), transparent 70%);
+    filter: blur(28px);
+    z-index: -1;
+    animation: pulso-arcano 5s ease-in-out infinite;
+}
+
+@keyframes pulso-arcano {
+    0%, 100% { opacity: .55; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.08); }
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+    border: var(--frame) solid var(--gold-antique);
+    outline: 2px solid var(--ink);
+    box-shadow: 0 14px 40px rgba(0,0,0,.9);
+    /* Sem isso o navegador borra a pixel art ao redimensionar. */
+    image-rendering: pixelated;
+}
+
+.title-scroll {
+    background: rgba(0,0,0,.72);
+    border: 2px solid var(--gold-antique);
+    padding: clamp(.8rem, 3vw, 1rem) clamp(1rem, 5vw, 2rem);
+    margin-bottom: clamp(1.75rem, 6vw, 2.5rem);
+    max-width: 46ch;
+    position: relative;
+}
+
+/* Rebites de metal — detalhe de menu de SNES, custo zero. */
+.title-scroll::before,
+.title-scroll::after {
+    content: '';
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--gold-antique);
+}
+.title-scroll::before { top: -2px;    left: -2px; }
+.title-scroll::after  { bottom: -2px; right: -2px; }
+
+.subtitle {
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-sm);
+    color: var(--parchment);
+    text-shadow: 2px 2px 0 var(--ink);
+    line-height: 1.9;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(.75rem, 3vw, 1.25rem);
+    justify-content: center;
+}
+
+.hero-status {
+    margin-top: clamp(1.5rem, 5vw, 2rem);
+    color: var(--parchment-dim);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+/* =========================================================
+   6. BOTÕES
+   ========================================================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-sm);
+    text-decoration: none;
+    text-align: center;
+    padding: clamp(.9rem, 3.5vw, 1.15rem) clamp(1.2rem, 5vw, 2.25rem);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    /* Alvo de toque confortável no celular. */
+    min-height: 48px;
+    cursor: pointer;
+    transition: background .12s steps(2), color .12s steps(2),
+                box-shadow .12s steps(2), transform .08s steps(2);
+}
+
+.primary-btn {
+    background: linear-gradient(to bottom, #4a2f1d 0%, #3a2415 50%, #2e1a0f 100%);
+    color: var(--gold-light);
+    border: var(--frame) solid var(--gold-antique);
+    outline: 2px solid var(--ink);
+    box-shadow: inset 0 0 12px rgba(0,0,0,.8), var(--shadow-hard);
+}
+
+.ghost-btn {
+    background: rgba(0,0,0,.4);
+    color: var(--parchment-dim);
+    border: 2px solid var(--stone-mid);
+    box-shadow: 4px 4px 0 rgba(0,0,0,.6);
+}
+
+.btn:active { transform: translate(3px, 3px); }
+.primary-btn:active { box-shadow: inset 0 0 18px rgba(0,0,0,.95), 3px 3px 0 var(--ink); }
+.ghost-btn:active   { box-shadow: 1px 1px 0 var(--ink); }
+
+/* =========================================================
+   7. SEÇÕES
+   ========================================================= */
+.lore-section,
+.roster-section,
+.skills-section {
+    padding: clamp(3.5rem, 11vw, 6rem) clamp(1rem, 4vw, 2rem);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: clamp(2.5rem, 8vw, 4rem);
+}
+
+.section-title {
+    font-family: 'Press Start 2P', cursive;
+    color: var(--blood-red);
+    font-size: var(--fs-pixel-lg);
+    line-height: 1.5;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0 var(--ink), -1px -1px 0 var(--gold-antique);
+}
+
+.divider {
+    height: 3px;
+    background: linear-gradient(90deg,
+        transparent, var(--gold-deep) 25%, var(--gold-antique) 50%,
+        var(--gold-deep) 75%, transparent);
+    margin-top: 1.25rem;
+}
+
+.section-lead {
+    margin: 1.25rem auto 0;
+    max-width: 50ch;
+    color: var(--parchment-dim);
+    font-size: 1.2rem;
+}
+
+/* =========================================================
+   8. LORE
+   Painéis de pedra entalhada: espinha dourada à esquerda,
+   capitular em pixel e medida de linha confortável.
+   ========================================================= */
+.lore-chapter {
+    max-width: 68ch;
+    margin: 0 auto clamp(2.5rem, 8vw, 4rem);
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    background: linear-gradient(135deg, rgba(19,19,25,.92), rgba(8,8,11,.92));
+    border: 2px solid var(--stone-mid);
+    border-left: 6px solid var(--gold-deep);
+    box-shadow: var(--shadow-hard), inset 0 0 40px rgba(0,0,0,.6);
+    position: relative;
+}
+
+.lore-chapter:last-child { margin-bottom: 0; }
+
+.lore-eyebrow {
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-xs);
+    color: var(--gold-antique);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: .9rem;
+}
+
+.lore-heading {
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-md);
+    color: var(--parchment);
+    line-height: 1.7;
+    text-shadow: 2px 2px 0 var(--ink);
+    margin-bottom: 1.5rem;
+}
+
+.lore-text {
+    font-size: var(--fs-lore);
+    line-height: 1.7;
+    color: var(--parchment);
+    max-width: 62ch;
+}
+
+.lore-text + .lore-text { margin-top: 1.1rem; }
+
+/* Capitular só no primeiro parágrafo de cada capítulo. */
+.lore-text--lead::first-letter {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.9rem;
+    color: var(--gold-light);
+    float: left;
+    line-height: 1;
+    margin: .28rem .6rem 0 0;
+    text-shadow: 2px 2px 0 var(--ink);
+}
+
+/* --- Capítulo III: duas colunas no desktop --- */
+.lore-chapter--arena {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    align-items: center;
+    max-width: 900px;
+    border-left-color: var(--arcane);
+}
+
+.lore-body { flex: 1 1 340px; min-width: 0; }
+
+/* --- ASSINATURA: a Ruína Mágica fechando sobre o pátio --- */
+.ruin-visual {
+    flex: 0 0 auto;
+    width: clamp(160px, 40vw, 220px);
+    aspect-ratio: 1;
+    position: relative;
+    display: grid;
+    place-items: center;
+    margin: 0 auto;
+}
+
+.ruin-ring {
+    position: absolute;
+    inset: 0;
+    border: 2px dashed var(--arcane);
+    border-radius: 50%;
+    opacity: 0;
+    animation: ruina-fechando 6s linear infinite;
+}
+.ruin-ring:nth-child(2) { animation-delay: 2s; }
+.ruin-ring:nth-child(3) { animation-delay: 4s; }
+
+@keyframes ruina-fechando {
+    0%   { transform: scale(1);   opacity: 0; }
+    15%  { opacity: .85; }
+    100% { transform: scale(.18); opacity: 0; }
+}
+
+/* O pátio central: o único ponto que a névoa não engole. */
+.ruin-core {
+    width: 16%;
+    aspect-ratio: 1;
+    background: var(--gold-antique);
+    box-shadow: 0 0 20px var(--gold-antique), 0 0 40px rgba(184,153,71,.4);
+}
+
+/* =========================================================
+   9. CARTÕES DE PERSONAGEM
+   ========================================================= */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: clamp(1.75rem, 5vw, 3rem);
+}
+
+.rpg-card {
+    cursor: pointer;
+    text-align: left;
+    /* A sombra dura vive AQUI, no pai. Antes estava no .card-frame E no
+       .card-dialog, então a sombra do quadro caía sobre a placa de nome. */
+    box-shadow: var(--shadow-deep);
+    transition: transform .18s steps(3), box-shadow .18s steps(3);
+    outline-offset: 4px;
+}
+
+.card-frame {
+    background: var(--stone-dark);
+    border: 6px solid var(--gold-antique);
+    border-bottom: none;
+    /* aspect-ratio no lugar de height fixo: retratos de proporções
+       diferentes não cortam feio conforme a coluna muda de largura. */
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    image-rendering: pixelated;
+    filter: contrast(1.08) saturate(1.12);
+    transition: transform .3s steps(4), filter .3s ease;
+}
+
+/* Névoa arcana subindo do rodapé do retrato. */
+.card-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,16,33,.85) 0%, transparent 45%);
+    pointer-events: none;
+}
+
+.card-dialog {
+    background: linear-gradient(to bottom, #0e0e14, var(--dialog-blue));
+    border: 6px solid var(--gold-antique);
+    border-top: 3px solid var(--gold-deep);
+    padding: clamp(.85rem, 3vw, 1.1rem);
+    text-align: center;
+    box-shadow: inset 0 0 14px var(--ink);
+}
+
+.char-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-sm);
+    color: #fff;
+    margin-bottom: .6rem;
+    text-shadow: 2px 2px 0 var(--ink);
+    line-height: 1.4;
+}
+
+.char-class {
+    font-size: clamp(1.1rem, 3.2vw, 1.4rem);
+    color: var(--gold-antique);
+    text-shadow: 1px 1px 0 var(--ink);
+    letter-spacing: .5px;
+}
+
+/* =========================================================
+   10. MODAL
+   ========================================================= */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.9);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(1rem, 5vw, 2rem);
+    opacity: 1;
+    transition: opacity .2s ease;
+}
+
+.modal.hidden { opacity: 0; pointer-events: none; }
+
+.rpg-dialog-box {
+    background: linear-gradient(135deg, var(--dialog-blue), var(--dialog-deep));
+    border: 8px solid var(--parchment);
+    /* Pixel art não tem canto arredondado — tirei o border-radius. */
+    border-radius: 0;
+    padding: clamp(1.25rem, 5vw, 2rem);
+    text-align: center;
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    max-height: 86svh;
+    overflow-y: auto;
+    box-shadow: 0 0 0 4px var(--ink), inset 0 0 24px var(--ink),
+                14px 14px 0 rgba(0,0,0,.7);
+}
+
+.close-btn {
+    position: absolute;
+    top: -18px; right: -18px;
+    background: var(--blood-red);
+    border: 4px solid var(--parchment);
+    color: #fff;
+    width: 44px; height: 44px;
+    font-size: 1.2rem;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: background .1s steps(2);
+}
+
+.close-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+
+.modal-title {
+    font-family: 'Press Start 2P', cursive;
+    color: var(--parchment);
+    font-size: var(--fs-pixel-md);
+    line-height: 1.6;
+    text-shadow: 2px 2px 0 var(--ink);
+    text-transform: uppercase;
+}
+
+.modal-class {
+    color: var(--gold-antique);
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    margin: .4rem 0 1.25rem;
+}
+
+.modal-display {
+    background: rgba(0,0,0,.55);
+    border: 2px solid var(--gold-antique);
+    padding: clamp(1.25rem, 5vw, 2rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 180px;
+    /* Grade fina atrás do sprite, tipo fundo de editor de sprite. */
+    background-image:
+        repeating-linear-gradient(90deg, rgba(184,153,71,.06) 0 1px, transparent 1px 16px),
+        repeating-linear-gradient(0deg,  rgba(184,153,71,.06) 0 1px, transparent 1px 16px);
+}
+
+.pixel-sprite {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,.8));
+}
+
+.modal-lore {
+    margin-top: 1.25rem;
+    text-align: left;
+    font-size: 1.2rem;
+    line-height: 1.65;
+    color: var(--parchment);
+    border-left: 3px solid var(--gold-deep);
+    padding-left: 1rem;
+}
+
+/* =========================================================
+   11. GRIMÓRIO
+   ========================================================= */
+.skills-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 5vw, 3rem);
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.video-panel {
+    flex: 1 1 340px;
+    min-width: min(300px, 100%);
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /* Acompanha a rolagem enquanto você percorre a lista de magias. */
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+    max-height: calc(100svh - var(--nav-h) - 3rem);
+}
+
+.video-frame {
+    background: var(--ink);
+    border: 6px solid var(--gold-antique);
+    border-radius: 0;
+    padding: 4px;
+    box-shadow: var(--shadow-deep), inset 0 0 15px rgba(0,0,0,.9);
+    position: relative;
+}
+
+.spell-video {
+    width: 100%;
+    /* Reserva o espaço antes do vídeo carregar — sem isso a página
+       "pula" toda vez que troca de magia. Ajuste se não for 16:9. */
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    background: var(--ink);
+    display: block;
+    image-rendering: pixelated;
+}
+
+/* Entrada de grimório: nome + ficha mecânica + lore */
+.skill-info-box {
+    background: linear-gradient(to right, var(--dialog-blue), var(--dialog-deep));
+    border: 3px solid var(--gold-deep);
+    border-left: 6px solid var(--gold-antique);
+    padding: clamp(1rem, 3.5vw, 1.35rem);
+    box-shadow: 4px 4px 0 rgba(0,0,0,.6);
+    /* Reserva altura: sem isso a caixa cresce e encolhe a cada clique
+       e o inventário inteiro dança na tela. */
+    min-height: 190px;
+}
+
+#current-skill-name {
+    font-family: 'Press Start 2P', cursive;
+    color: var(--gold-light);
+    font-size: var(--fs-pixel-sm);
+    line-height: 1.6;
+    text-shadow: 2px 2px 0 var(--ink);
+}
+
+/* A ficha: o que a magia faz de verdade, com os números do código. */
+.skill-tag {
+    margin-top: .7rem;
+    color: var(--arcane-glow);
+    font-size: 1.05rem;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    min-height: 1.05rem;
+}
+
+.skill-lore {
+    margin-top: .9rem;
+    padding-top: .9rem;
+    border-top: 1px solid var(--stone-mid);
+    color: var(--parchment);
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+/* Troca de magia: o texto entra com um flash, não aparece do nada. */
+.skill-info-box.trocando #current-skill-name,
+.skill-info-box.trocando .skill-tag,
+.skill-info-box.trocando .skill-lore { opacity: 0; }
+
+#current-skill-name,
+.skill-tag,
+.skill-lore { transition: opacity .12s steps(2); }
+
+.skills-inventory {
+    flex: 1 1 320px;
+    display: grid;
+    /* 64px mínimo garante alvo de toque decente no celular. */
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 12px;
+    background: rgba(0,0,0,.55);
+    padding: clamp(1rem, 4vw, 1.5rem);
+    border: 3px solid var(--stone-mid);
+    box-shadow: inset 0 0 24px var(--ink);
+    align-content: start;
+}
+
+.spell-icon {
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 4px;
+    background: var(--stone-dark);
+    border: 3px solid var(--stone-mid);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform .15s steps(2), filter .15s ease,
+                border-color .15s steps(2), box-shadow .15s ease;
+    filter: grayscale(45%) brightness(.75);
+}
+
+.spell-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.spell-icon.active {
+    filter: grayscale(0%) brightness(1.2);
+    border-color: var(--arcane);
+    box-shadow: 0 0 16px var(--arcane), inset 0 0 10px rgba(123,92,255,.3);
+    transform: scale(1.06);
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================================
+   12. RODAPÉ
+   ========================================================= */
+footer {
+    text-align: center;
+    padding: clamp(2rem, 6vw, 3rem) 1.25rem;
+    background: var(--ink);
+    color: #5a5a66;
+    font-size: 1.1rem;
+    border-top: 3px solid var(--stone-mid);
+    position: relative;
+    z-index: 1;
+}
+
+.footer-mark {
+    font-family: 'Press Start 2P', cursive;
+    font-size: var(--fs-pixel-xs);
+    color: var(--gold-deep);
+    letter-spacing: 2px;
+    margin-bottom: .9rem;
+}
+
+/* =========================================================
+   13. HOVER — só onde existe mouse de verdade.
+   Em touch o :hover fica grudado depois do toque e o cartão
+   trava levantado. Por isso vai tudo isolado aqui.
+   ========================================================= */
+@media (hover: hover) and (pointer: fine) {
+    .nav-links a:hover {
+        color: var(--gold-light);
+        border-bottom-color: var(--arcane);
+    }
+
+    .primary-btn:hover {
+        background: linear-gradient(to bottom, #5c4029, #402c1a);
+        color: #fff;
+        box-shadow: inset 0 0 12px rgba(0,0,0,.8),
+                    var(--shadow-hard), 0 0 22px rgba(184,153,71,.35);
+    }
+
+    .ghost-btn:hover {
+        color: var(--parchment);
+        border-color: var(--arcane);
+        box-shadow: 4px 4px 0 rgba(0,0,0,.6), 0 0 18px rgba(123,92,255,.25);
+    }
+
+    .rpg-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 14px 14px 0 rgba(0,0,0,.7), 0 0 30px rgba(123,92,255,.25);
+    }
+
+    .rpg-card:hover .card-art {
+        transform: scale(1.06);
+        filter: contrast(1.15) saturate(1.25);
+    }
+
+    .close-btn:hover { background: var(--blood-bright); }
+
+    .spell-icon:hover {
+        transform: scale(1.1);
+        filter: grayscale(0%) brightness(1.15);
+        border-color: var(--gold-antique);
+        z-index: 2;
+        position: relative;
+    }
+}
+
+/* =========================================================
+   14. FOCO POR TECLADO
+   ========================================================= */
+.btn:focus-visible,
+.close-btn:focus-visible,
+.rpg-card:focus-visible,
+.spell-icon:focus-visible,
+.nav-links a:focus-visible,
+.nav-brand:focus-visible {
+    outline: 3px solid var(--arcane-glow);
+    outline-offset: 3px;
+}
+
+/* =========================================================
+   15. MOVIMENTO REDUZIDO
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+    }
+    /* Sem animação os anéis sumiriam: deixa três estáticos. */
+    .ruin-ring { opacity: .5; }
+    .ruin-ring:nth-child(2) { transform: scale(.65); }
+    .ruin-ring:nth-child(3) { transform: scale(.35); }
+}
+
+/* =========================================================
+   16. TELAS PEQUENAS
+   ========================================================= */
+@media (max-width: 860px) {
+    /* Empilhado no celular o sticky só atrapalha a rolagem. */
+    .video-panel { position: static; }
+}
+
+@media (max-width: 480px) {
+    /* Com -18px o X saía da tela em celular estreito. */
+    .close-btn { top: -14px; right: -14px; width: 40px; height: 40px; font-size: 1rem; }
+    .crt-overlay { opacity: .6; }
+    .grid-container { gap: 1.5rem; }
+    .action-buttons { flex-direction: column; width: 100%; max-width: 320px; }
+    .btn { width: 100%; }
+}
+
+/* Barra de rolagem combinando */
+@media (pointer: fine) {
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { background: var(--abyss-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-deep); border: 2px solid var(--abyss-bg); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-antique); }
+}

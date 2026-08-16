@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King of Mages — 16-bit Magic Battle Royale</title>
+
+    <meta name="description" content="Ten mages. One castle. No rules. A 16-bit top-down battle royale where the last spell standing claims the Elixir of the King.">
+    <meta name="theme-color" content="#08080b">
+
+    <!-- Cartão de compartilhamento (WhatsApp, Discord, Twitter) -->
+    <meta property="og:title" content="King of Mages — 16-bit Magic Battle Royale">
+    <meta property="og:description" content="Ten mages. One castle. No rules. The last spell standing claims the Elixir of the King.">
+    <meta property="og:image" content="images/bootsplash.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Fontes retro: preconnect acelera o carregamento -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <a href="#lore" class="skip-link">Skip to content</a>
+
+    <!-- Overlay sutil de tela antiga de TV -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+
+    <!-- =====================================================
+         NAVEGAÇÃO
+         ===================================================== -->
+    <nav class="navbar" aria-label="Main">
+        <div class="nav-content">
+            <a href="#top" class="nav-brand">K.O.M</a>
+            <ul class="nav-links">
+                <li><a href="#lore">The Legend</a></li>
+                <li><a href="#roster">Mages</a></li>
+                <li><a href="#skills">Grimoire</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+    <header class="hero" id="top">
+        <div class="logo-wrapper">
+            <img src="images/bootsplash.jpg" alt="King of Mages" class="logo" width="1024" height="1024">
+        </div>
+
+        <div class="title-scroll">
+            <p class="subtitle">The Ultimate 16-bit Magic Battle Royale</p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="#roster" class="btn primary-btn">Enter the arena</a>
+            <a href="#lore" class="btn ghost-btn">Read the legend</a>
+        </div>
+
+        <p class="hero-status">In development &middot; Android</p>
+    </header>
+
+    <!-- =====================================================
+         LORE
+         ===================================================== -->
+    <section id="lore" class="lore-section">
+        <div class="section-header">
+            <h2 class="section-title">The Legend</h2>
+            <div class="divider"></div>
+        </div>
+
+        <article class="lore-chapter">
+            <p class="lore-eyebrow">Chapter I</p>
+            <h3 class="lore-heading">The Massacre of the Century</h3>
+            <p class="lore-text lore-text--lead">For centuries the ruined continent has known a single law: the survival of the most ruthless. Lands that once prospered are desolate wastes now, crawling with twisted beasts and ruled by the brute force of profane sorcery.</p>
+            <p class="lore-text">Every hundred years a silent, maddening call echoes across the land, dragging the most powerful and most desperate creatures alive to the cyclopean gates of the Ancient Capital. This is the dawn of the King's Tournament. No alliances. No rules. No mercy. A brutal convergence where outcasts, ancient entities and masters of the arcane collide in absolute carnage.</p>
+        </article>
+
+        <article class="lore-chapter">
+            <p class="lore-eyebrow">Chapter II</p>
+            <h3 class="lore-heading">The Throne and the Void</h3>
+            <p class="lore-text lore-text--lead">The last mage standing wins more than a crown of bone. By proving mind and body unbreakable, the survivor claims absolute dominion over the continent for the next hundred years. But political power is the smallest prize on the table.</p>
+            <p class="lore-text">The real one waits in the abyssal catacombs beneath the castle: the mythical Elixir of the King. Fragmented accounts and forgotten grimoires whisper that the chalice holds no mundane potion, but the liquid essence of the void itself. Whoever drinks it has their mortal limits shattered — an endless well of magic, and an ascension to something close to a god walking among the ruins.</p>
+        </article>
+
+        <article class="lore-chapter lore-chapter--arena">
+            <div class="lore-body">
+                <p class="lore-eyebrow">Chapter III</p>
+                <h3 class="lore-heading">The Living Arena</h3>
+                <p class="lore-text lore-text--lead">The castle that hosts the tournament is no backdrop of dead stone. It is alive, aware, and hungry.</p>
+                <p class="lore-text">As the massacre unfolds, the Magic Ruin — a cosmic, suffocating mist — begins to swallow the outer reaches of the fortress. The anomaly dissolves the sanity and the flesh of anything caught inside it, driving the mages further and further toward the central courtyard. Hiding is not an option. The castle forces the confrontation, squeezing the competitors until one spell prevails.</p>
+            </div>
+
+            <!-- Assinatura visual: a Ruína fechando sobre o pátio central -->
+            <div class="ruin-visual" aria-hidden="true">
+                <span class="ruin-ring"></span>
+                <span class="ruin-ring"></span>
+                <span class="ruin-ring"></span>
+                <span class="ruin-core"></span>
+            </div>
+        </article>
+    </section>
+
+    <!-- =====================================================
+         PERSONAGENS
+         ===================================================== -->
+    <main id="roster" class="roster-section">
+        <div class="section-header">
+            <h2 class="section-title">Choose Your Mage</h2>
+            <div class="divider"></div>
+            <p class="section-lead">Everyone who walks into the arena carries their own curse and their own ambition. Tap a portrait to hear theirs.</p>
+        </div>
+
+        <div class="grid-container">
+
+            <article class="rpg-card"
+                     role="button"
+                     tabindex="0"
+                     data-name="Dinka"
+                     data-class="Fairy Archer"
+                     data-sprite="images/dinka_idle.gif"
+                     data-lore="The only spark of light in the carnage. Where the others fight for greed or bloodlust, Dinka carries the survival of her entire species. Her grove is withering on the ruined continent, and she entered the tournament with one goal: plunder the untold riches of the catacombs and save her people from extinction. To secure a future for the ones she loves, her arrows of energy will not hesitate to cut down anyone in the way.">
+                <div class="card-frame">
+                    <img src="images/fadalobby.png" alt="Dinka, the Fairy Archer" class="card-art" loading="lazy">
+                </div>
+                <div class="card-dialog">
+                    <h3 class="char-name">Dinka</h3>
+                    <p class="char-class">Fairy Archer</p>
+                </div>
+            </article>
+
+            <article class="rpg-card"
+                     role="button"
+                     tabindex="0"
+                     data-name="Fior&eacute;"
+                     data-class="The Nephilim"
+                     data-sprite="images/fiore_idle.gif"
+                     data-lore="A paradox with the blood of the abyss running through him. Grotesque smile, brutal magic, and one thing to prove: that his cursed bloodline stands above every traditional mage who ever sneered at it.">
+                <div class="card-frame">
+                    <img src="images/fiore.png" alt="Fioré, the Nephilim" class="card-art" loading="lazy">
+                </div>
+                <div class="card-dialog">
+                    <h3 class="char-name">Fior&eacute;</h3>
+                    <p class="char-class">The Nephilim</p>
+                </div>
+            </article>
+
+            <article class="rpg-card"
+                     role="button"
+                     tabindex="0"
+                     data-name="Oceblue"
+                     data-class="The Aquamancer"
+                     data-sprite="images/oceblue_idle.gif"
+                     data-lore="A mysterious being whose eyes burn beneath a dark hood. At his side drifts an abyssal octopus lit up in neon, and through it he channels the crushing pressure and the darker secrets of the deepest oceans.">
+                <div class="card-frame">
+                    <img src="images/oceblue_lobby.png" alt="Oceblue, the Aquamancer" class="card-art" loading="lazy">
+                </div>
+                <div class="card-dialog">
+                    <h3 class="char-name">Oceblue</h3>
+                    <p class="char-class">The Aquamancer</p>
+                </div>
+            </article>
+
+            <article class="rpg-card"
+                     role="button"
+                     tabindex="0"
+                     data-name="Yubelluma"
+                     data-class="The Vampire"
+                     data-sprite="images/yubelluma_idle.gif"
+                     data-lore="She swings a massive, thirsting scythe, and she is not chasing the Elixir for glory. Ordinary human blood stopped answering her hunger a long time ago. She wants something stronger.">
+                <div class="card-frame">
+                    <img src="images/vampiracerta.png" alt="Yubelluma, the Vampire" class="card-art" loading="lazy">
+                </div>
+                <div class="card-dialog">
+                    <h3 class="char-name">Yubelluma</h3>
+                    <p class="char-class">The Vampire</p>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- =====================================================
+         GRIMÓRIO
+         ===================================================== -->
+    <section id="skills" class="skills-section">
+        <div class="section-header">
+            <h2 class="section-title">Grimoire of Spells</h2>
+            <div class="divider"></div>
+            <p class="section-lead">Pick a rune to watch the spell go off.</p>
+        </div>
+
+        <div class="skills-layout">
+
+            <div class="video-panel">
+                <div class="video-frame">
+                    <!-- playsinline: sem isso o iOS abre o vídeo em tela cheia sozinho -->
+                    <video id="skills-video" class="spell-video"
+                           muted playsinline preload="metadata">
+                        <source src="images/videohabilidades.mp4" type="video/mp4">
+                        Your browser does not support video playback.
+                    </video>
+                </div>
+                <div class="skill-info-box" id="skill-entry">
+                    <h3 id="current-skill-name">Select a spell</h3>
+                    <p id="current-skill-tag" class="skill-tag"></p>
+                    <p id="current-skill-lore" class="skill-lore">Every rune in the grimoire was torn from somewhere it should have stayed. Pick one.</p>
+                </div>
+            </div>
+
+            <!--
+                data-start / data-end aceitam segundos ("28") ou mm:ss ("01:15").
+                O script.js converte os dois formatos.
+            -->
+            <div class="skills-inventory" role="list">
+                <button class="spell-icon" role="listitem"
+                        data-name="Raise Dead"
+                        data-start="0" data-end="16"
+                        data-tag="Summon &middot; Grave 300 HP &middot; up to 3 skeletons"
+                        data-lore="The catacombs beneath the Ancient Capital were never emptied. Carve the sigil and the flagstones give way: a grave answers, and what climbs out of it remembers nothing except the hand that called. Break the stone and the bones fall still — the grave is always the weak point.">
+                    <img src="images/revive_mortos.png" alt="Raise Dead" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Fury"
+                        data-start="18" data-end="26"
+                        data-tag="Buff &middot; Paid in blood &middot; Amplifies basic attacks"
+                        data-lore="A pact written in the caster's own blood. The mage opens a vein, the arcane drinks, and every ordinary strike comes back sharpened into something the body was never built to channel. The spell asks for health before it gives anything, and it never asks politely.">
+                    <img src="images/furia.png" alt="Fury" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Fire Orb"
+                        data-start="28" data-end="33"
+                        data-tag="Projectile &middot; Impact damage + burn over time"
+                        data-lore="The simplest of the profane arts and the first thing every mage is taught. The flame does not go out when it lands. It finds a seam in the flesh and keeps eating long after the caster has stopped paying attention.">
+                    <img src="images/orbefogo.png" alt="Fire Orb" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Poison Orb"
+                        data-start="35" data-end="40"
+                        data-tag="Projectile &middot; Impact damage + poison over time"
+                        data-lore="Brewed from whatever still grows in the flooded lower vaults. The blow itself is almost gentle. The dying takes its time, and most victims spend that time running toward help that was never coming.">
+                    <img src="images/orbeveneno.png" alt="Poison Orb" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Thunder"
+                        data-start="40" data-end="46"
+                        data-tag="Targeted strike &middot; Area damage + shock"
+                        data-lore="The mage does not throw the bolt. He points, and the sky above the Ancient Capital agrees with him. Whatever was standing on the marked ground is already convulsing by the time the sound arrives.">
+                    <img src="images/trovao.jfif" alt="Thunder" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Ice Dart"
+                        data-start="47" data-end="53"
+                        data-tag="Projectile &middot; Impact damage + slow"
+                        data-lore="A shard drawn from the frozen well at the heart of the fortress. It shatters on contact and the cold goes in with the splinters, seizing the muscle until a sprint collapses into a stagger. Nobody has ever outrun the second one.">
+                    <img src="images/dardodegelo.png" alt="Ice Dart" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Repulsion"
+                        data-start="55" data-end="60"
+                        data-tag="Pulse &middot; Throws everything in the radius outward"
+                        data-lore="No blade, no flame — only the raw refusal of the arcane to share space. Everything inside the ring leaves at once. Ledges, spike pits and open water have claimed more competitors than the spell itself ever has.">
+                    <img src="images/repulsao.png" alt="Repulsion" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Healing Totem"
+                        data-start="61" data-end="72"
+                        data-tag="Structure &middot; Heals allies in radius &middot; Destructible"
+                        data-lore="Old stonework the castle permits the mage to borrow. Planted, it knits the wounds of everyone it recognises as kin, patiently, until someone tears it down. The castle always lets you set it. The castle also tells everyone else exactly where it is.">
+                    <img src="images/totemcuramini.png" alt="Healing Totem" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Bomb"
+                        data-start="01:15" data-end="01:20"
+                        data-tag="Arcing throw &middot; Telegraphed blast &middot; Escapable"
+                        data-lore="Thrown in a lazy arc, it lands and begins to swell. There is exactly enough time to see the circle on the ground and decide whether you are fast enough to leave it. Most competitors are wrong about that, once.">
+                    <img src="images/bomba.png" alt="Bomb" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Orbiting Orbs"
+                        data-start="01:22" data-end="01:28"
+                        data-tag="Aura &middot; Two orbs &middot; Contact damage on cooldown"
+                        data-lore="Two fragments of a shattered ward, bound to circle the caster's ribs. They aim at nothing and ask for nothing. Anyone who closes to melee range simply discovers that they are there.">
+                    <img src="images/orbesgiratorios.png" alt="Orbiting Orbs" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Enlightened"
+                        data-start="01:30" data-end="01:44"
+                        data-tag="Shield &middot; 25% of max health &middot; Lasts until broken"
+                        data-lore="A borrowed grace, and the castle charges interest on it. Light gathers into a shell across the mage's skin and holds — not for a count of seconds, but until something hits hard enough to end it. The spell never expires. It only fails.">
+                    <img src="images/iluminado.png" alt="Enlightened" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Void Portal"
+                        data-start="01:45" data-end="01:57"
+                        data-tag="Two-way gate &middot; Caster and partner only &middot; 8 seconds"
+                        data-lore="Two mouths torn in the same breath, and the distance between them politely declines to exist. Only the one who opened it and their sworn partner may pass; everyone else walks into a hole that is not there for them. It closes on its own schedule, whether or not you are through.">
+                    <img src="images/portal.png" alt="Void Portal" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Ricochet Bolt"
+                        data-start="01:58" data-end="02:09"
+                        data-tag="Chain bolt &middot; 3 jumps &middot; &minus;20% damage each jump"
+                        data-lore="The bolt is hungry and it is not patient. It takes the first body it finds, then leaps to the next, and the next — weaker every time, never quite finished. A crowded courtyard is its natural habitat.">
+                    <img src="images/iconericochete-removebg-preview.png" alt="Ricochet Bolt" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Summon Imp"
+                        data-start="02:09" data-end="02:28"
+                        data-tag="Summon &middot; One imp at a time &middot; 60 HP"
+                        data-lore="A sigil, a short wait, and something small and delighted claws its way up through it. It fights for whoever called it, which it appears to consider an excellent joke. Call a second and the first is gone — they refuse to share a master.">
+                    <img src="images/diabreteicone-removebg-preview.png" alt="Summon Imp" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Rune of Fire"
+                        data-start="02:30" data-end="02:38"
+                        data-tag="Trap &middot; Armed sigil &middot; Triggers on contact"
+                        data-lore="Burned into the flagstones and left to wait. The rune holds no opinion about who steps on it. It simply keeps holding its breath, sometimes for the length of an entire duel, and then returns every second of that patience in one go.">
+                    <img src="images/runadefogo.png" alt="Rune of Fire" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Rune of Ice"
+                        data-start="02:40" data-end="02:45"
+                        data-tag="Trap &middot; Armed sigil &middot; Freezes on contact"
+                        data-lore="Cut into the ground with a blade that has been kept cold since before the last tournament. It does not kill anyone. It takes the floor out from under a retreat and hands whoever is chasing you the rest of the fight.">
+                    <img src="images/runadegelo.png" alt="Rune of Ice" loading="lazy">
+                </button>
+                <button class="spell-icon" role="listitem"
+                        data-name="Summon Slime"
+                        data-start="02:48" data-end="02:58"
+                        data-tag="Summon &middot; Charges the nearest enemy &middot; Detonates"
+                        data-lore="The lower vaults are full of them, and they are far more willing than they are useful. Bound to a caster, they lurch toward the nearest living thing with genuinely terrible enthusiasm and burst on arrival. There is no version of this spell where the slime comes home.">
+                    <img src="images/slime.png" alt="Summon Slime" loading="lazy">
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p class="footer-mark">King of Mages</p>
+        <p>&copy; 2026 &middot; All rights reserved</p>
+    </footer>
+
+    <!-- =====================================================
+         MODAL
+         ===================================================== -->
+    <div id="char-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="rpg-dialog-box">
+            <button class="close-btn" aria-label="Close">&times;</button>
+            <h2 id="modal-title" class="modal-title">Name</h2>
+            <p id="modal-class" class="modal-class">Class</p>
+            <div class="modal-display">
+                <!-- src vazio no HTML gera ícone de imagem quebrada em alguns navegadores.
+                     O script preenche antes de mostrar o modal. -->
+                <img id="modal-gif" class="pixel-sprite" alt="" hidden>
+            </div>
+            <p id="modal-lore" class="modal-lore"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
